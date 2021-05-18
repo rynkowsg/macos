@@ -4,13 +4,18 @@ Set of scripts automatic MacOS setup after fresh system installation.
 
 ## How to use
 
-### Step 1: Fetch the sources
+### When git unavialble yet
 ```shell
+# download
 curl -L https://github.com/rynkowski/macos/archive/master.zip --output macos.zip
+# unpack
 unzip macos.zip -d macos
+# run
+./macos/master/bin/run
 ```
 
-### Step 2: Run
+### When git available
 ```shell
-./macos/master/bin/run
+git clone https://github.com/rynkowski/macos.git
+./macos/bin/run
 ```

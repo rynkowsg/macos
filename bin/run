@@ -7,8 +7,11 @@ LIBS_DIR="${ROOT_DIR}/lib"
 source "${LIBS_DIR}/utilities"
 source "${LIBS_DIR}/modules/10_xcode_cli_tools"
 source "${LIBS_DIR}/modules/20_homebrew"
-source "${LIBS_DIR}/modules/30_ssh_keys"
+source "${LIBS_DIR}/modules/21_homebrew_formulas"
+source "${LIBS_DIR}/modules/22_homebrew_casks"
+source "${LIBS_DIR}/modules/30_app_store_apps"
 source "${LIBS_DIR}/modules/40_dotfiles"
+source "${LIBS_DIR}/modules/50_ssh_keys"
 
 printf "Loaded all dependencies\n\n"
 
@@ -16,4 +19,10 @@ echo "--------------------------"
 install_xcode_cli_tools
 echo "--------------------------"
 install_homebrew
+echo "--------------------------"
+install_homebrew_formulas
+echo "--------------------------"
+install_homebrew_casks
+echo "--------------------------"
+install_app_store_apps
 echo "--------------------------"

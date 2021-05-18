@@ -3,8 +3,6 @@
 # Copied from:
 # https://github.com/bkuhlmann/mac_os/blob/566b9d871ebb9fa59bf9407ac568ac2d16d7aa06/bin/install_dev_tools
 
-
-
 function install_xcode_cli_tools {
   printf "Installing Xcode CLI tools...\n"
 
