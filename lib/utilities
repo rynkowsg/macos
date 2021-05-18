@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Defines general utility functions.
+# Inspired by:
+# https://github.com/bkuhlmann/mac_os/blob/566b9d871ebb9fa59bf9407ac568ac2d16d7aa06/lib/utilities.sh
+
+# Answers Homebrew binary root path.
+# Parameters: None.
+get_homebrew_bin_root() {
+  if [[ "$(/usr/bin/arch)" == "arm64" ]]; then
+    printf "%s" "/opt/homebrew/bin"
+  else
+    printf "%s" "/usr/local/bin"
+  fi
+}
+export -f get_homebrew_bin_root
+
+printf "Loaded: %s\n" "${BASH_SOURCE[0]}"

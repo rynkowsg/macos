@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2059
+
+function install_homebrew {
+  if ! command -v brew > /dev/null; then
+#    /bin/bash -c "$(curl --location --fail --silent --show-error https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  else
+    RED='\033[0;31m'; NC='\033[0m' # No Color
+    printf "${RED}Homebrew already installed${NC}\n"
+  fi
+}
+
+function remove_homebrew {
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+}
+
+printf "Loaded: %s\n" "${BASH_SOURCE[0]}"

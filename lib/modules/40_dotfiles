@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+function install_dotfiles {
+  git clone https://github.com/rynkowski/dotfiles ${HOME}/.dotfiles
+}
+
+function uninstall_dotfiles {
+  printf "NOT IMPLEMENTED YET"
+  exit 1
+}
+
+printf "Loaded: %s\n" "${BASH_SOURCE[0]}"
