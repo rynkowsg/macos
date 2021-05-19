@@ -33,4 +33,8 @@ function uninstall_xcode_cli_tools {
   printf "There is no option to uninstall Xcode\n"
 }
 
-printf "Loaded: %s\n" "${BASH_SOURCE[0]}"
+if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
+  printf "Loaded: %s\n" "${BASH_SOURCE[0]}"
+else
+  install_xcode_cli_tools
+fi

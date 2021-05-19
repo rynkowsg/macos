@@ -20,4 +20,8 @@ function remove_homebrew {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
 }
 
-printf "Loaded: %s\n" "${BASH_SOURCE[0]}"
+if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
+  printf "Loaded: %s\n" "${BASH_SOURCE[0]}"
+else
+  install_homebrew
+fi

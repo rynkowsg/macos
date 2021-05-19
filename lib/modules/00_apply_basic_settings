@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-function install_homebrew_casks {
+function apply_basic_settings {
   printf "NOT IMPLEMENTED YET\n"
 }
 
-function remove_homebrew_casks {
+function revert_basic_settings {
   printf "NOT IMPLEMENTED YET\n"
 }
 
 if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
   printf "Loaded: %s\n" "${BASH_SOURCE[0]}"
 else
-  install_homebrew_casks
+  apply_basic_settings
 fi
