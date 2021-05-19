@@ -1,0 +1,188 @@
+#!/usr/bin/env bash
+
+# Inspirations:
+# - https://github.com/aterreno/macosx-from-scratch/blob/master/Brewfile
+# - https://github.com/bkuhlmann/mac_os-config/blob/main/bin/install_homebrew_formulas
+# - https://github.com/bkuhlmann/mac_os-config/blob/main/bin/install_homebrew_casks
+
+function install_homebrew {
+  if ! command -v brew > /dev/null; then
+#    /bin/bash -c "$(curl --location --fail --silent --show-error https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  else
+    RED='\033[0;31m'; NC='\033[0m' # No Color
+    printf "${RED}Homebrew already installed${NC}\n"
+  fi
+}
+
+function remove_homebrew {
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+}
+
+function install_apps {
+  printf "Installing Homebrew formulas...\n"
+  set -x
+
+  brew tap homebrew/cask
+  brew tap homebrew/cask-fonts
+
+  #################
+  # NORMAL PEOPLE #
+  #################
+
+  # Basic CLI tools
+  # mas - tool to install apps from App Store
+  # https://github.com/mas-cli/mas
+  brew install mas
+  brew install vim
+  brew install htop
+  brew install curl
+  brew install wget
+  brew install tree
+  brew install mc
+  brew install tmux
+  brew install readline
+  brew install bash
+  brew install bash-completion
+  brew install zsh
+
+  # Less common CLI tools
+  brew install speedtest-cli
+  brew install youtube-dl
+
+  # Web Browsers
+  brew install --cask firefox --appdir /Applications
+  brew install --cask google-chrome --appdir /Applications
+
+  # Messengers
+  brew install --cask telegram-desktop
+  brew install --cask whatsapp
+  brew install --cask messenger
+  brew install --cask slack
+  brew install --cask signal
+  brew install --cask zoom
+
+  # Other
+  brew install --cask macs-fan-control
+  brew install --cask evernote
+  brew install --cask standard-notes
+  brew install --cask spotify
+  brew install --cask nordvpn
+  # alternatively:
+  #     mas install 1116599239  # NordVPN
+  brew install --cask 1password
+  # alternatively:
+  #     mas install 443987910   # 1Password
+
+  ###############
+  # PROGRAMMERS #
+  ###############
+
+  # NON-GENERAL
+  brew install jq
+  brew install pv  # data's progress through a pipe
+
+  # gpg
+  brew install gnupg
+  brew install pinentry-mac
+
+  # VCS
+  brew install svn
+  brew install git
+  brew install git-lfs
+  brew install git-gui
+  brew install git-cola
+  brew install tig
+
+  # scripting
+  brew install python
+  brew install ruby
+  brew install borkdude/brew/babashka
+  # clojure
+  brew install clojure
+  brew install leiningen
+  brew install rlwrap
+  # envs
+  brew install tfenv
+  brew install nvm
+
+  # programming - general
+  brew install awscli
+  brew install pre-commit
+  brew install asciidoc
+  brew install asciidoctor
+  # asciidoctor **/*.adoc
+  brew install fswatch
+  # fswatch -o **/*.adoc | xargs -n1 -I{} asciidoctor **/*.adoc
+  brew install httpie
+
+  # audio
+  brew install ffmpeg
+  brew install libav # avconv - audio converter
+
+  # video
+  brew install asciinema  # https://asciinema.org/
+
+  # graphics
+  brew install graphviz
+  brew install imagemagick
+  brew install imageoptim-cli
+  brew install --cask imageoptim
+
+  # utils
+  brew install exiftool
+  brew install prettyping
+
+  # Virtualization / containerization
+  brew install --cask virtualbox
+  brew install --cask docker
+  # For dockerizing commands
+  # https://github.com/whalebrew/whalebrew
+  brew install whalebrew
+
+  # IDEs
+  brew install --cask intellij-idea
+  brew install --cask pycharm
+  brew install --cask webstorm
+
+  # other - programming
+  brew install --cask dash   # documentations
+  brew install --cask iterm2 # terminal
+  brew install circleci
+
+  set +x
+  printf "Installing Homebrew formulas... DONE\n"
+}
+
+function install_fonts {
+  brew install --cask font-roboto
+  brew install --cask font-fira-code
+  brew install --cask font-fira-mono
+}
+
+function install_android_tools {
+  brew install gradle
+  brew install ktlint
+  brew install pidcat
+  brew install --cask android-sdk
+  brew install --cask vysor
+  brew install leakcanary-shark
+  brew install --cask chromedriver
+}
+
+function install_homebrew_formulas {
+  install_homebrew
+  install_apps
+  install_fonts
+#  install_android_tools
+}
+
+function remove_homebrew_formulas {
+  remove_homebrew
+}
+
+if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
+  printf "Loaded: %s\n" "${BASH_SOURCE[0]}"
+else
+  install_homebrew_formulas
+fi
