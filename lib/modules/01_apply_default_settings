@@ -1,11 +1,150 @@
 #!/usr/bin/env bash
 
+# Applies system and application defaults.
+# Inspirations:
+# - https://github.com/bkuhlmann/mac_os-config/blob/main/bin/apply_default_settings
+# - https://gist.github.com/Tristor/d3c699d16f6c1bbeec8f4c9d647a1f24
+# - https://www.cultofmac.com/646404/secret-mac-settings/
+# - https://github.com/mathiasbynens/dotfiles/blob/master/.macos
+# - https://gist.github.com/cmdoptesc/506a3017bc8acdf9787ddc2fcead0688
+
 function apply_default_settings {
-  printf "NOT IMPLEMENTED YET\n"
+  printf "%s\n" "System - Disable boot sound effects."
+  sudo nvram SystemAudioVolume=" "
+
+  # LOGIN
+  printf "%s\n" "Login - Reveal IP address, hostname, OS version, etc. when clicking login window clock."
+  sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+  printf "%s\n" "System - Disable window resume system-wide."
+  defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
+  # More: https://discussions.apple.com/thread/4074116
+  defaults write com.apple.loginwindow LoginwindowLaunchesRelaunchApps -bool false
+  # More: https://apple.stackexchange.com/a/29343
+  #       https://apple.stackexchange.com/a/44903
+
+  # PERFORMANCE
+  printf "%s\n" "System - Disable automatic termination of inactive apps."
+  defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
+
+  # SECURITY
+  printf "%s\n" "System - Disable 'Are you sure you want to open this application?' dialog."
+  defaults write com.apple.LaunchServices LSQuarantine -bool false
+
+  # UPDATES
+  printf "%s\n" "Updates - Disable software updates."
+  sudo softwareupdate --schedule off
+  printf "%s\n" "Updates - Turn on app auto-update"
+  defaults write com.apple.commerce AutoUpdate -bool true
+  printf "%s\n" "Updates - Don't allow the App Store to reboot machine on macOS updates"
+  defaults write com.apple.commerce AutoUpdateRestartRequired -bool false
+
+  # DOCK
+  printf "%s\n" "Dock - Automatically hide and show."
+  defaults write com.apple.dock autohide -bool true
+  printf "%s\n" "Dock - Remove the auto-hiding delay."
+  defaults write com.apple.Dock autohide-delay -float 0
+  printf "%s\n" "Dock - Remove all default app icons."
+  defaults rename com.apple.dock persistent-apps persistent-apps-backup
+  defaults write com.apple.dock persistent-apps -array
+  # to see Dock changes immediately execute:
+  #    killall Dock
+
+  # WINDOWS
+  printf "%s\n" "Windows - Always show scrollbars"
+  defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+  printf "%s\n" "Windows - Increase window resize speed for Cocoa applications"
+  defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+  printf "%s\n" "Windows - Expand save panel by default."
+  defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+  defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+
+  # FINDER
+  printf "%s\n" "Finder - Show the ~/Library folder."
+  chflags nohidden ~/Library
+  printf "%s\n" "Finder - Show the /Volumes folder."
+  sudo chflags nohidden /Volumes
+  # Hint: to preview flags use `ls -lO ~`
+  printf "%s\n" "Finder - Show filename extensions."
+  defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+  printf "%s\n" "Finder - Show hidden files."
+  defaults write com.apple.finder AppleShowAllFiles -bool true
+  printf "%s\n" "Finder - Disable the warning when changing a file extension."
+  defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+  printf "%s\n" "Finder - Show path bar."
+  defaults write com.apple.finder ShowPathbar -bool true
+  printf "%s\n" "Finder - Show status bar."
+  defaults write com.apple.finder ShowStatusBar -bool true
+  printf "%s\n" "Finder - Display full POSIX path as window title."
+  defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+  printf "%s\n" "Finder - Use list view in all Finder windows."
+  defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+  # KEYBOARD
+  printf "%s\n" "Keyboard - Set a fast keyboard repeat rate."
+  defaults write NSGlobalDomain KeyRepeat -int 2
+  printf "%s\n" "Keyboard - Set minimal 'Delay Until Repeat"''
+  defaults write NSGlobalDomain InitialKeyRepeat -int 15
+  printf "%s\n" "Keyboard - Disable press-and-hold for keys in favor of key repeat."
+  defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+  printf "%s\n" "Keyboard - Disable press-and-hold for keys in favor of key repeat."
+  defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
+  # More: https://apple.stackexchange.com/a/60496
+
+  # OTHER
+  printf "%s\n" "Game Center - Disable Game Center."
+  defaults write com.apple.gamed Disabled -bool true
 }
 
 function revert_default_settings {
-  printf "NOT IMPLEMENTED YET\n"
+  sudo nvram SystemAudioVolume="_"
+
+  # LOGIN
+  sudo defaults delete /Library/Preferences/com.apple.loginwindow AdminHostInfo
+  defaults delete NSGlobalDomain NSQuitAlwaysKeepsWindows
+  defaults delete com.apple.loginwindow LoginwindowLaunchesRelaunchApps
+
+  # PERFORMANCE
+  defaults delete NSGlobalDomain NSDisableAutomaticTermination
+
+  # SECURITY
+  defaults delete com.apple.LaunchServices LSQuarantine
+
+  # UPDATES
+  sudo softwareupdate --schedule on
+  defaults delete com.apple.commerce AutoUpdate
+  defaults delete com.apple.commerce AutoUpdateRestartRequired
+
+  # DOCK
+  defaults delete com.apple.dock autohide
+  defaults delete com.apple.dock autohide-delay
+  defaults delete com.apple.dock persistent-apps
+  defaults rename com.apple.dock persistent-apps-backup persistent-apps
+
+  # WINDOWS
+  defaults delete NSGlobalDomain AppleShowScrollBars
+  defaults delete NSGlobalDomain NSWindowResizeTime -float 0.001
+  defaults delete NSGlobalDomain NSNavPanelExpandedStateForSaveMode
+  defaults delete NSGlobalDomain NSNavPanelExpandedStateForSaveMode2
+
+  # FINDER
+  chflags hidden ~/Library
+  chflags hidden /Volumes
+  defaults delete NSGlobalDomain AppleShowAllExtensions -bool true
+  defaults delete com.apple.finder AppleShowAllFiles -bool true
+  defaults delete com.apple.finder FXEnableExtensionChangeWarning
+  defaults delete com.apple.finder ShowPathbar
+  defaults delete com.apple.finder ShowStatusBar
+  defaults delete com.apple.finder _FXShowPosixPathInTitle -bool true
+  defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"  # this is a default value
+
+  # KEYBOARD
+  defaults delete NSGlobalDomain KeyRepeat
+  defaults delete NSGlobalDomain InitialKeyRepeat
+  defaults delete NSGlobalDomain ApplePressAndHoldEnabled
+  defaults delete NSGlobalDomain com.apple.keyboard.fnState
+
+  # OTHER
+  defaults delete com.apple.gamed Disabled
 }
 
 if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
