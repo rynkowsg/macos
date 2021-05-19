@@ -19,7 +19,7 @@ function remove_homebrew {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
 }
 
-function install_apps {
+function install_apps_general {
   printf "Installing Homebrew formulas...\n"
   set -x
 
@@ -170,14 +170,14 @@ function install_android_tools {
   brew install --cask chromedriver
 }
 
-function install_homebrew_formulas {
+function install_apps {
   install_homebrew
-  install_apps
+  install_apps_general
   install_fonts
 #  install_android_tools
 }
 
-function remove_homebrew_formulas {
+function remove_apps {
   remove_homebrew
 }
 
