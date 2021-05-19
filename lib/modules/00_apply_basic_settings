@@ -39,6 +39,7 @@ function revert_basic_settings {
 if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
   printf "Loaded: %s\n" "${BASH_SOURCE[0]}"
 else
+  printf "Run directly: %s\n" "${BASH_SOURCE[0]}"
   check_basic_settings
   apply_basic_settings
 fi

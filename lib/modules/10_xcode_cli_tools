@@ -36,5 +36,6 @@ function uninstall_xcode_cli_tools {
 if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
   printf "Loaded: %s\n" "${BASH_SOURCE[0]}"
 else
+  printf "Run directly: %s\n" "${BASH_SOURCE[0]}"
   install_xcode_cli_tools
 fi
