@@ -9,6 +9,8 @@
 # - https://gist.github.com/cmdoptesc/506a3017bc8acdf9787ddc2fcead0688
 
 function apply_default_settings {
+  revert_default_settings
+
   printf "%s\n" "System - Disable boot sound effects."
   sudo nvram SystemAudioVolume=" "
 
