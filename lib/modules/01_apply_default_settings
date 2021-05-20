@@ -5,11 +5,11 @@ ROOT_DIR="$(cd "${SCRIPT_DIR}/.." || exit 1; pwd -P)"
 LIBS_DIR="${ROOT_DIR}/lib"
 
 function apply_default_settings {
-   "${SCRIPT_DIR}"/system_settings/apply.sh
+   "${ROOT_DIR}"/lib/modules/system_settings/apply.sh
 }
 
 function revert_default_settings {
-  "${SCRIPT_DIR}"/system_settings/restore_default.sh
+  "${ROOT_DIR}"/lib/modules/system_settings/restore_default.sh
 }
 
 if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then

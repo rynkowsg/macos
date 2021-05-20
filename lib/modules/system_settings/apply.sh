@@ -158,8 +158,34 @@ sudo systemsetup -settimezone "Europe/London"# > /dev/null
 # Finder                                                                      #
 ###############################################################################
 
-# Allow quitting via ⌘ + Q; doing so will also hide desktop icons
+# Add a quit option to the Finder.
+# Allows quitting via ⌘ + Q; doing so will also hide desktop icons
+# https://macos-defaults.com/finder/QuitMenuItem.html
 defaults write com.apple.finder QuitMenuItem -bool true
+
+# Show hidden files by default
+# https://macos-defaults.com/finder/AppleShowAllFiles.html
+defaults write com.apple.finder AppleShowAllFiles -bool true
+
+# Show all file extensions in the Finder.
+# https://macos-defaults.com/finder/AppleShowAllExtensions.html
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Disable the warning when changing a file extension
+# https://macos-defaults.com/finder/FXEnableExtensionChangeWarning.html
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+# Save to disk (not to iCloud) by default
+# https://macos-defaults.com/finder/NSDocumentSaveNewDocumentsToCloud.html
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+# Remove the delay when hovering the toolbar title
+# https://macos-defaults.com/finder/NSToolbarTitleViewRolloverDelay.html
+defaults write NSGlobalDomain NSToolbarTitleViewRolloverDelay -float 0
+
+# Set sidebar icon size to medium
+# https://macos-defaults.com/finder/NSTableViewDefaultSizeMode.html
+defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 
 # Disable window animations and Get Info animations
 defaults write com.apple.finder DisableAllAnimations -bool true
@@ -175,12 +201,6 @@ defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
 defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
-# Show hidden files by default
-defaults write com.apple.finder AppleShowAllFiles -bool true
-
-# Show all filename extensions
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-
 # Show status bar
 defaults write com.apple.finder ShowStatusBar -bool true
 
@@ -195,9 +215,6 @@ defaults write com.apple.finder _FXSortFoldersFirst -bool true
 
 # When performing a search, search the current folder by default
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-
-# Disable the warning when changing a file extension
-defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 # Enable spring loading for directories
 defaults write NSGlobalDomain com.apple.springing.enabled -bool true

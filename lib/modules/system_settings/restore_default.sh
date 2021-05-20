@@ -127,8 +127,26 @@ sudo systemsetup -settimezone "Europe/London"
 # Finder                                                                      #
 ###############################################################################
 
-# Revert "Allow quitting via ⌘ + Q; doing so will also hide desktop icons"
+# Revert "Add a quit option to the Finder."
 defaults delete com.apple.finder QuitMenuItem
+
+# Revert "Show hidden files by default"
+defaults delete com.apple.finder AppleShowAllFiles -bool true
+
+# Revert "Show all filename extensions"
+defaults delete NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Revert "Disable the warning when changing a file extension"
+defaults delete com.apple.finder FXEnableExtensionChangeWarning
+
+# Revert "Save to disk (not to iCloud) by default"
+defaults delete NSGlobalDomain NSDocumentSaveNewDocumentsToCloud
+
+# Revert "Remove the delay when hovering the toolbar title"
+defaults delete NSGlobalDomain NSToolbarTitleViewRolloverDelay
+
+# Revert "Set sidebar icon size to medium"
+defaults delete NSGlobalDomain NSTableViewDefaultSizeMode
 
 # Revert "Disable window animations and Get Info animations"
 defaults delete com.apple.finder DisableAllAnimations
@@ -146,12 +164,6 @@ defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
 defaults delete com.apple.finder ShowMountedServersOnDesktop
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
-# Revert "Show hidden files by default"
-defaults delete com.apple.finder AppleShowAllFiles -bool true
-
-# Revert "Show all filename extensions"
-defaults delete NSGlobalDomain AppleShowAllExtensions -bool true
-
 # Revert "Show status bar"
 defaults delete com.apple.finder ShowStatusBar
 
@@ -166,9 +178,6 @@ defaults delete com.apple.finder _FXSortFoldersFirst
 
 # Revert "When performing a search, search the current folder by default"
 defaults delete com.apple.finder FXDefaultSearchScope
-
-# Revert "Disable the warning when changing a file extension"
-defaults delete com.apple.finder FXEnableExtensionChangeWarning
 
 # Enable spring loading for directories
 defaults write NSGlobalDomain com.apple.springing.enabled -bool true
