@@ -31,20 +31,25 @@ function install_apps_general {
   #################
 
   # Basic CLI tools
+  brew install coreutils
+  brew install readline
+  brew install tree
+  brew install mc
+  brew install curl
+  brew install wget
   # mas - tool to install apps from App Store
   # https://github.com/mas-cli/mas
   brew install mas
   brew install vim
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   brew install htop
-  brew install curl
-  brew install wget
-  brew install tree
-  brew install mc
   brew install tmux
-  brew install readline
   brew install bash
   brew install bash-completion
   brew install zsh
+  chsh -s /usr/local/bin/zsh
+  brew install autojump
+  brew install openssh
 
   # Less common CLI tools
   brew install speedtest-cli
@@ -60,9 +65,15 @@ function install_apps_general {
   brew install --cask messenger
   brew install --cask slack
   brew install --cask signal
+  brew install --cask skype
   brew install --cask zoom
 
+  # Office
+  brew install --cask microsoft-office
+  brew install --cask microsoft-auto-update
+
   # Other
+  brew install --cask textmate
   brew install --cask macs-fan-control
   brew install --cask evernote
   brew install --cask standard-notes
@@ -78,9 +89,12 @@ function install_apps_general {
   # PROGRAMMERS #
   ###############
 
-  # NON-GENERAL
   brew install jq
   brew install pv  # data's progress through a pipe
+
+  # https://thoughtbot.github.io/rcm/rcm.7.html
+  # https://thoughtbot.github.io/rcm/rcrc.5.html
+  brew install rcm
 
   # gpg
   brew install gnupg
@@ -102,9 +116,21 @@ function install_apps_general {
   brew install clojure
   brew install leiningen
   brew install rlwrap
+
   # envs
+  # tfenv - for terraform, globally and locally in projects
   brew install tfenv
-  brew install nvm
+  tfenv install
+  # Terraform checkers
+  brew install tfsec
+  brew install checkov
+  # nvm - locally only in JS projects
+  brew install nvm && mkdir ~/.nvm
+  nvm install --lts
+  # yarn - for globally installed packages
+  npm install yarn
+  yarn global add serverless
+  yarn global add npx
 
   # programming - general
   brew install awscli

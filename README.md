@@ -1,6 +1,6 @@
 # macos
 
-Set of scripts automatic MacOS setup after fresh system installation.
+Set of scripts automating setup of newly installed MacOS.
 
 ## How to use
 
