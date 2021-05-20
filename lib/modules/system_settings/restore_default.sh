@@ -48,23 +48,6 @@ defaults delete NSGlobalDomain NSQuitAlwaysKeepsWindows
 # Revert "isable relaunching apps"
 defaults delete com.apple.loginwindow LoginwindowLaunchesRelaunchApps
 
-############
-### DOCK ###
-############
-
-# Revert "Automatically hide and show"
-defaults delete com.apple.dock autohide
-
-# Revert "Remove the auto-hiding delay"
-defaults delete com.apple.dock autohide-delay
-
-# Revert "Remove all default app icons"
-defaults delete com.apple.dock persistent-apps
-defaults rename com.apple.dock persistent-apps-backup persistent-apps
-
-# Revert "Show only open applications in the Dock"
-defaults delete com.apple.dock static-only
-
 ###############
 ### WINDOWS ###
 ###############
@@ -97,7 +80,7 @@ defaults delete NSGlobalDomain NSDisableAutomaticTermination
 ### SECURITY ###
 ################
 
-# Revert "Disable 'Are you sure you want to open this application?' dialog"
+# Revert "Turn off the 'Application Downloaded from Internet' quarantine warning"
 defaults delete com.apple.LaunchServices LSQuarantine
 
 ###############################################################################
@@ -239,6 +222,7 @@ defaults delete com.apple.NetworkBrowser BrowseAllInterfaces
 
 # Revert "Show the ~/Library folder"
 chflags hidden ~/Library
+xattr -wx com.apple.FinderInfo "0000000000000000400000000000000000000000000000000000000000000000" ~/Library
 # Revert "Show the /Volumes folder"
 chflags hidden /Volumes
 
@@ -246,14 +230,73 @@ chflags hidden /Volumes
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
 
-# Revert "Enable highlight hover effect for the grid view of a stack (Dock)"
-defaults delete com.apple.dock mouse-over-hilite-stack
+# Revert "Place Dock on the right"
+defaults delete com.apple.dock orientation
 
-# Revert "Set the icon size of Dock items to 36 pixels"
+# Revert "Automatically hide and show"
+defaults delete com.apple.dock autohide
+
+# Revert "Remove the auto-hiding delay"
+defaults delete com.apple.dock autohide-delay
+
+# Remove the animation when hiding/showing the Dock
+defaults delete com.apple.dock autohide-time-modifier
+
+# Revert "Set the icon size of Dock items to 48 pixels"
 defaults delete com.apple.dock tilesize
 
 # Revert "Change minimize/maximize window effect"
 defaults delete com.apple.dock mineffect
+
+# Revert "Minimize windows into their application’s icon"
+defaults delete com.apple.dock minimize-to-application
+
+# Revert "Enable spring loading for all Dock items"
+defaults delete com.apple.dock enable-spring-load-actions-on-all-items
+
+# Revert "Show indicator lights for open applications in the Dock"
+defaults delete com.apple.dock show-process-indicators
+
+# Revert "Wipe all (default) app icons from the Dock"
+defaults delete com.apple.dock persistent-apps
+defaults rename com.apple.dock persistent-apps-backup persistent-apps
+
+# Revert "Show only open applications in the Dock"
+defaults delete com.apple.dock static-only
+
+# defaults "Don’t animate opening applications from the Dock"
+defaults delete com.apple.dock launchanim
+
+# Revert "Enable highlight hover effect for the grid view of a stack (Dock)"
+defaults delete com.apple.dock mouse-over-hilite-stack
+
+# Revert "Speed up Mission Control animations"
+defaults delete com.apple.dock expose-animation-duration
+
+# Revert "Show one application at a time"
+defaults delete com.apple.dock single-app
+
+### MISSION CONTROL
+
+# Revert "Enable mission control"
+defaults delete com.apple.dock mcx-expose-disabled
+
+# Revert "Don’t automatically rearrange Spaces based on most recent use"
+defaults delete com.apple.dock mru-spaces
+
+# Revert "When switching to an application, switch to a Space with open windows for the application"
+defaults delete NSGlobalDomain AppleSpacesSwitchOnActivate
+
+# Revert "Don't group windows by application"
+defaults delete com.apple.dock expose-group-apps
+
+# Revert "Hot corners"
+defaults delete com.apple.dock wvous-tl-corner
+defaults delete com.apple.dock wvous-tl-modifier
+defaults delete com.apple.dock wvous-tr-corner
+defaults delete com.apple.dock wvous-tr-modifier
+defaults delete com.apple.dock wvous-bl-corner
+defaults delete com.apple.dock wvous-bl-modifier
 
 ###############################################################################
 # Safari & WebKit                                                             #
@@ -279,6 +322,11 @@ defaults delete com.apple.dock mineffect
 # Time Machine                                                                #
 ###############################################################################
 
+# Revert "Don't offer new disks for Time Machine backup"
+defaults delete com.apple.TimeMachine DoNotOfferNewDisksForBackup
+
+# Revert "Disable local Time Machine backups"
+hash tmutil &> /dev/null && sudo tmutil enable
 
 ###############################################################################
 # Activity Monitor                                                            #

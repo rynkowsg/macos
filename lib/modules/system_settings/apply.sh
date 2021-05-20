@@ -8,6 +8,11 @@
 # - https://github.com/mathiasbynens/dotfiles/blob/master/.macos
 # - https://gist.github.com/cmdoptesc/506a3017bc8acdf9787ddc2fcead0688
 # - https://gist.github.com/llimllib/aa4420cac617774ee2a54d8603d862e4
+# - https://github.com/driesvints/dotfiles/blob/main/.macos
+
+# Websites:
+# - https://macos-defaults.com
+# - https://www.defaults-write.com
 
 ###############################################################################
 # Prepare script                                                              #
@@ -67,23 +72,6 @@ defaults write com.apple.loginwindow LoginwindowLaunchesRelaunchApps -bool false
 # More: https://apple.stackexchange.com/a/29343
 #       https://apple.stackexchange.com/a/44903
 
-############
-### DOCK ###
-############
-
-# Automatically hide and show
-defaults write com.apple.dock autohide -bool true
-
-# Remove the auto-hiding delay
-defaults write com.apple.Dock autohide-delay -float 0
-
-# Remove all default app icons
-defaults rename com.apple.dock persistent-apps persistent-apps-backup
-defaults write com.apple.dock persistent-apps -array
-
-# Show only open applications in the Dock
-#defaults write com.apple.dock static-only -bool true
-
 ###############
 ### WINDOWS ###
 ###############
@@ -117,7 +105,9 @@ defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
 ### SECURITY ###
 ################
 
-# Disable 'Are you sure you want to open this application?' dialog
+# Turn off the 'Application Downloaded from Internet' quarantine warning
+# Warning: doesn't work on Big Sur
+# https://macos-defaults.com/misc/LSQuarantine.html
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 ###############################################################################
@@ -269,23 +259,121 @@ defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
 # Show the ~/Library folder
 chflags nohidden ~/Library
+xattr -d com.apple.FinderInfo  ~/Library
+# To print flags:      ls -lO ~/
+# To preview attr:     xattr -l ~/Library
+# More: https://apple.stackexchange.com/a/378380
+
 # Show the /Volumes folder
 sudo chflags nohidden /Volumes
-# Hint: to preview flags use `ls -lO ~`
 
 ###############################################################################
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
 
-# Enable highlight hover effect for the grid view of a stack (Dock)
-#defaults write com.apple.dock mouse-over-hilite-stack -bool true
+# Place Dock on the right
+# https://macos-defaults.com/dock/orientation.html#set-to-right
+# Default: "bottom", other values: "left", "right"
+defaults write com.apple.dock orientation -string right
 
-# Set the icon size of Dock items to 40 pixels
-defaults write com.apple.dock tilesize -int 40
+# Automatically hide and show the Dock
+defaults write com.apple.dock autohide -bool true
+
+# Remove the auto-hiding delay
+defaults write com.apple.Dock autohide-delay -float 0
+
+# Remove the animation when hiding/showing the Dock
+# https://macos-defaults.com/dock/autohide-time-modifier.html#set-to-0
+defaults write com.apple.dock autohide-time-modifier -float 0
+
+# Set the icon size of Dock items to 48 pixels
+# https://macos-defaults.com/dock/tilesize.html#set-to-48-default-value
+defaults write com.apple.dock tilesize -int 48
 
 # Change minimize/maximize window effect
-# available options: "genie", "scale"
-defaults write com.apple.dock mineffect -string "genie"
+# Available options: "genie", "scale", "suck"
+# https://macos-defaults.com/dock/mineffect.html#set-to-scale
+defaults write com.apple.dock mineffect -string "scale"
+
+# Minimize windows into their application’s icon
+defaults write com.apple.dock minimize-to-application -bool true
+
+# Enable spring loading for all Dock items
+# https://macos-defaults.com/misc/enable-spring-load-actions-on-all-items.html
+defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
+
+# Show indicator lights for open applications in the Dock
+defaults write com.apple.dock show-process-indicators -bool true
+
+# Wipe all (default) app icons from the Dock
+# This is only really useful when setting up a new Mac, or if you don’t use
+# the Dock to launch apps.
+defaults rename com.apple.dock persistent-apps persistent-apps-backup
+defaults write com.apple.dock persistent-apps -array
+# TODO: make backups more sophisticated
+#  - test is there were already some backup (to avoid overriding)
+#  - implement adding number at the end (use recursion to increase numbers if backup exists)
+
+# Show only open applications in the Dock
+# This setting is similar to just clearing persistent-apps. Similar but different.
+# It works in a way that if true, Dock always clear persistent-apps on launch.
+defaults write com.apple.dock static-only -bool true
+
+# Don’t animate opening applications from the Dock
+defaults write com.apple.dock launchanim -bool false
+
+# Enable highlight hover effect for the grid view of a stack (Dock)
+defaults write com.apple.dock mouse-over-hilite-stack -bool true
+
+# Speed up Mission Control animations
+# Warning: doesn't work on Sierra
+# https://github.com/mathiasbynens/dotfiles/issues/711
+defaults write com.apple.dock expose-animation-duration -float 0.1
+
+# Show one application at a time
+# https://www.defaults-write.com/show-one-application-at-a-time/
+# Same behaviour can be achived by using:
+# - command-alt click a dock item to switch while hiding others
+# - command-alt-h to hide all other apps but the front facing one
+#defaults write com.apple.dock single-app -bool true
+
+### MISSION CONTROL
+
+# Enable mission control
+# https://www.defaults-write.com/mac-os-x-disable-mission-control-and-spaces/
+defaults write com.apple.dock mcx-expose-disabled -bool false
+
+# Don’t automatically rearrange Spaces based on most recent use
+# https://macos-defaults.com/mission-control/mru-spaces.html
+defaults write com.apple.dock mru-spaces -bool true
+
+# When switching to an application, switch to a Space with open windows for the application
+defaults write NSGlobalDomain AppleSpacesSwitchOnActivate -bool true
+
+# Don't group windows by application
+defaults write com.apple.dock expose-group-apps -bool false
+
+# Hot corners
+# Possible values:
+#  0: no-op
+#  2: Mission Control
+#  3: Show application windows
+#  4: Desktop
+#  5: Start screen saver
+#  6: Disable screen saver
+#  7: Dashboard
+# 10: Put display to sleep
+# 11: Launchpad
+# 12: Notification Center
+# Top left screen corner → Mission Control
+defaults write com.apple.dock wvous-tl-corner -int 2
+defaults write com.apple.dock wvous-tl-modifier -int 0
+# Top right screen corner → Desktop
+defaults write com.apple.dock wvous-tr-corner -int 4
+defaults write com.apple.dock wvous-tr-modifier -int 0
+# Bottom left screen corner → Start screen saver
+defaults write com.apple.dock wvous-bl-corner -int 5
+defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ###############################################################################
 # Safari & WebKit                                                             #
@@ -311,6 +399,12 @@ defaults write com.apple.dock mineffect -string "genie"
 # Time Machine                                                                #
 ###############################################################################
 
+# Don't offer new disks for Time Machine backup
+# https://macos-defaults.com/timemachine/DoNotOfferNewDisksForBackup.html#set-to-true
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
+# Disable local Time Machine backups
+hash tmutil &> /dev/null && sudo tmutil disable
 
 ###############################################################################
 # Activity Monitor                                                            #
