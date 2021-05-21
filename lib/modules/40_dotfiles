@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 function install_dotfiles {
-  git clone https://github.com/rynkowski/dotfiles "${HOME}/.dotfiles"
+  git clone --recursive https://github.com/rynkowski/dotfiles "$HOME"/.dotfiles
+  . "$HOME"/.dotfiles/install.sh
 }
 
 function uninstall_dotfiles {

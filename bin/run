@@ -23,3 +23,5 @@ install_xcode_cli_tools
 echo "--------------------------"
 install_apps
 echo "--------------------------"
+install_dotfiles
+echo "--------------------------"
