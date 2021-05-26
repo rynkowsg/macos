@@ -23,7 +23,6 @@ function install_apps_general {
   printf "Installing Homebrew formulas...\n"
   set -x
 
-  brew tap homebrew/cask
   brew tap homebrew/cask-fonts
 
   #################
@@ -37,9 +36,6 @@ function install_apps_general {
   brew install mc
   brew install curl
   brew install wget
-  # mas - tool to install apps from App Store
-  # https://github.com/mas-cli/mas
-  brew install mas
   brew install vim
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   vim +PlugInstall +PlugClean! +qall
@@ -58,37 +54,11 @@ function install_apps_general {
   brew install speedtest-cli
   brew install youtube-dl
 
-  # Web Browsers
-  brew install --cask firefox --appdir /Applications
-  brew install --cask google-chrome --appdir /Applications
-
   # Messengers
-  brew install --cask telegram-desktop
-  brew install --cask whatsapp
-  brew install --cask messenger
-  brew install --cask slack
-  brew install --cask signal
-  brew install --cask skype
-  brew install --cask zoom
   brew install weechat
-
-  # Office
-  brew install --cask microsoft-office
-  brew install --cask microsoft-auto-update
 
   # Other
   brew install --cask spectacle
-  brew install --cask textmate
-  brew install --cask macs-fan-control
-  brew install --cask evernote
-  brew install --cask standard-notes
-  brew install --cask spotify
-  brew install --cask nordvpn
-  # alternatively:
-  #     mas install 1116599239  # NordVPN
-  brew install --cask 1password
-  # alternatively:
-  #     mas install 443987910   # 1Password
 
   ###############
   # PROGRAMMERS #
