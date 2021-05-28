@@ -3,7 +3,7 @@
 # Applies system and application defaults.
 # Inspirations:
 # - https://github.com/bkuhlmann/mac_os-config/blob/main/bin/apply_default_settings
-# - https://gist.github.com/Tristor/d3c699d16f6c1bbeec8f4c9d647a1f24
+# - https://gist.githubspot.com/Tristor/d3c699d16f6c1bbeec8f4c9d647a1f24
 # - https://www.cultofmac.com/646404/secret-mac-settings/
 # - https://github.com/mathiasbynens/dotfiles/blob/master/.macos
 # - https://gist.github.com/cmdoptesc/506a3017bc8acdf9787ddc2fcead0688
@@ -75,9 +75,6 @@ defaults write com.apple.loginwindow LoginwindowLaunchesRelaunchApps -bool false
 ###############
 ### WINDOWS ###
 ###############
-
-# Always show scrollbars
-defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 
 # Disable smooth scrolling
 # (Uncomment if you’re on an older Mac that messes up the animation)
@@ -354,43 +351,6 @@ defaults write com.apple.dock expose-animation-duration -float 0.1
 # - command-alt-h to hide all other apps but the front facing one
 #defaults write com.apple.dock single-app -bool true
 
-### MISSION CONTROL
-
-# Enable mission control
-# https://www.defaults-write.com/mac-os-x-disable-mission-control-and-spaces/
-defaults write com.apple.dock mcx-expose-disabled -bool false
-
-# Don’t automatically rearrange Spaces based on most recent use
-# https://macos-defaults.com/mission-control/mru-spaces.html
-defaults write com.apple.dock mru-spaces -bool true
-
-# When switching to an application, switch to a Space with open windows for the application
-defaults write NSGlobalDomain AppleSpacesSwitchOnActivate -bool true
-
-# Don't group windows by application
-defaults write com.apple.dock expose-group-apps -bool false
-
-# Hot corners
-# Possible values:
-#  0: no-op
-#  2: Mission Control
-#  3: Show application windows
-#  4: Desktop
-#  5: Start screen saver
-#  6: Disable screen saver
-#  7: Dashboard
-# 10: Put display to sleep
-# 11: Launchpad
-# 12: Notification Center
-# Top left screen corner → Mission Control
-defaults write com.apple.dock wvous-tl-corner -int 2
-defaults write com.apple.dock wvous-tl-modifier -int 0
-# Top right screen corner → Desktop
-defaults write com.apple.dock wvous-tr-corner -int 4
-defaults write com.apple.dock wvous-tr-modifier -int 0
-# Bottom left screen corner → Start screen saver
-defaults write com.apple.dock wvous-bl-corner -int 5
-defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ###############################################################################
 # Safari & WebKit                                                             #
